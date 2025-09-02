@@ -1,7 +1,10 @@
+import { useState } from "react";
 
-export function Square({ value }) {
+export function Square() {
+  const [value, setValue] = useState("");
+
   function handleClick() {
-    console.log('clicked');
+    setValue('X');
   }
 
   return (
