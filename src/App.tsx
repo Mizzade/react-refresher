@@ -13,19 +13,22 @@ export function Square({ value, onSquareClick }) {
 
 
 export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(""));
 
   function handleClick(i) {
+    if (squares[i]) return;
     const nextSquares = squares.slice();
-    nextSquares[i] = "X";
+    nextSquares[i] = xIsNext ? "X" : "O";
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   }
   return (
     <>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)}/>
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
       </div>
       <div className="board-row">
         <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
