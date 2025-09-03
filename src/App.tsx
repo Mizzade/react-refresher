@@ -80,6 +80,11 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
+  function handleRestart() {
+    setHistory([Array(9).fill("")]);
+    setCurrentMove(0);
+  }
+
   function jumpTo(nextMove: number) {
     setCurrentMove(nextMove);
   }
@@ -108,13 +113,25 @@ export default function Game() {
   const orderedMoves = isAscending ? moves : moves.slice().reverse();
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        <button onClick={toggleOrder}>{orderDescription}</button>
-        <ol>{orderedMoves}</ol>
+    <div>
+      <div className="game">
+        <div className="board-wrapper">
+          <div className="game-board">
+            <Board
+              xIsNext={xIsNext}
+              squares={currentSquares}
+              onPlay={handlePlay}
+            />
+          </div>
+          {checkIfGameEnded(currentSquares) && <div className="btn-restart">
+            <button onClick={handleRestart}>Restart</button>
+          </div>
+          }
+        </div>
+        <div className="game-info">
+          <button onClick={toggleOrder}>{orderDescription}</button>
+          <ol>{orderedMoves}</ol>
+        </div>
       </div>
     </div>
   )
@@ -142,6 +159,10 @@ function getLocationString(history: string[][], move: number) {
 
 function checkIfDraw(squares: string[]) {
   return squares.every(square => square !== "") && !calculateWinner(squares);
+}
+
+function checkIfGameEnded(squares: string[]) {
+  return calculateWinner(squares) || checkIfDraw(squares);
 }
 
 function calculateWinnerSquares(squares: string[]) {
@@ -172,3 +193,5 @@ function calculateWinner(squares: string[]) {
     ? squares[result[0]]
     : null;
 }
+
+
