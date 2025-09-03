@@ -98,7 +98,7 @@ body {
 
 .board-row:after {
   clear: both;
-  content: '';
+  content: "";
   display: table;
 }
 
@@ -112,4 +112,13 @@ body {
 
 .game-info {
   margin-left: 20px;
+}
+
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-restart {
+  margin-top: 10px;
 }
