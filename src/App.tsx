@@ -84,11 +84,13 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+
+
   const moves = history.map((_, move) => {
     const description = move === currentMove
-      ? "You are at move #" + move
+      ? "You are at move #" + move + ' ' + getLocationString(history, move)
       : move > 0
-        ? 'Go to move #' + move
+        ? 'Go to move #' + move + ' ' + getLocationString(history, move)
         : 'Go to game start';
 
     const element = move === currentMove
@@ -118,7 +120,27 @@ export default function Game() {
   )
 }
 
-function checkIfDraw(squares: string []) {
+function getLocationString(history: string[][], move: number) {
+  if (move === 0) return ''
+
+  function compareArrays(arr1: string[], arr2: string[]) {
+    if (arr1.length !== arr2.length) return
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return i
+    }
+  }
+
+  const index = compareArrays(history[move], history[move - 1]);
+  if (index !== undefined) {
+    const col = index % 3;
+    const row = Math.floor(index / 3);
+    return `(${row + 1}, ${col + 1})`;
+  }
+
+  return ''
+}
+
+function checkIfDraw(squares: string[]) {
   return squares.every(square => square !== "") && !calculateWinner(squares);
 }
 
