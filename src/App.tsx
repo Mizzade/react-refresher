@@ -35,24 +35,20 @@ export function Board({ xIsNext, squares, onPlay }: BoardProps) {
     ? "Winner: " + winner
     : "Next player: " + (xIsNext ? "X" : "O");
 
+  const NUM_ROWS = 3;
+  const NUM_COLS = 3;
+  const board_squares = Array.from({ length: NUM_ROWS }, (_, rowIndex) => (
+    <div key={rowIndex} className="board-row">
+      {Array.from({ length: NUM_COLS }, (_, colIndex) => (
+        <Square value={squares[rowIndex * NUM_COLS + colIndex]} onSquareClick={() => handleClick(rowIndex * NUM_COLS + colIndex)} />
+      ))}
+    </div>
+  ))
+
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      {board_squares}
     </>
   )
 }
