@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export function Square({ value, onSquareClick }) {
+interface SquareProps {
+  value: string;
+  onSquareClick: () => void;
+}
+
+export function Square({ value, onSquareClick }: SquareProps) {
   return (
     <button
       className="square"
@@ -11,9 +16,14 @@ export function Square({ value, onSquareClick }) {
   )
 }
 
+interface BoardProps {
+  xIsNext: boolean;
+  squares: string[];
+  onPlay: (nextSquares: string[]) => void;
+}
 
-export function Board({ xIsNext, squares, onPlay }) {
-  function handleClick(i) {
+export function Board({ xIsNext, squares, onPlay }: BoardProps) {
+  function handleClick(i: number) {
     if (squares[i] || calculateWinner(squares)) return;
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext ? "X" : "O";
@@ -48,26 +58,28 @@ export function Board({ xIsNext, squares, onPlay }) {
 }
 
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill("")]);
-  const currentSquares = history[history.length - 1];
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove]
 
-  function handlePlay(nextSquares) {
-    setHistory([...history, nextSquares]);
-    setXIsNext(!xIsNext);
+  function handlePlay(nextSquares: string[]) {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
   }
 
-  function jumpTo(nextMove) {
-    // TODO
+  function jumpTo(nextMove: number) {
+    setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
+  const moves = history.map((_, move) => {
     const description = move > 0
       ? 'Go to move #' + move
       : 'Go to game start';
 
     return (
-      <li>
+      <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     )
@@ -86,7 +98,7 @@ export default function Game() {
 }
 
 
-function calculateWinner(squares) {
+function calculateWinner(squares: string[]) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
