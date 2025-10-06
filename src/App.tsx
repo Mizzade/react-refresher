@@ -80,15 +80,22 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
+  function handleRestart() {
+    setHistory([Array(9).fill("")]);
+    setCurrentMove(0);
+  }
+
   function jumpTo(nextMove: number) {
     setCurrentMove(nextMove);
   }
 
+
+
   const moves = history.map((_, move) => {
     const description = move === currentMove
-      ? "You are at move #" + move
+      ? "You are at move #" + move + ' ' + getLocationString(history, move)
       : move > 0
-        ? 'Go to move #' + move
+        ? 'Go to move #' + move + ' ' + getLocationString(history, move)
         : 'Go to game start';
 
     const element = move === currentMove
@@ -106,20 +113,56 @@ export default function Game() {
   const orderedMoves = isAscending ? moves : moves.slice().reverse();
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        <button onClick={toggleOrder}>{orderDescription}</button>
-        <ol>{orderedMoves}</ol>
+    <div>
+      <div className="game">
+        <div className="board-wrapper">
+          <div className="game-board">
+            <Board
+              xIsNext={xIsNext}
+              squares={currentSquares}
+              onPlay={handlePlay}
+            />
+          </div>
+          {checkIfGameEnded(currentSquares) && <div className="btn-restart">
+            <button onClick={handleRestart}>Restart</button>
+          </div>
+          }
+        </div>
+        <div className="game-info">
+          <button onClick={toggleOrder}>{orderDescription}</button>
+          <ol>{orderedMoves}</ol>
+        </div>
       </div>
     </div>
   )
 }
 
-function checkIfDraw(squares: string []) {
+function getLocationString(history: string[][], move: number) {
+  if (move === 0) return ''
+
+  function compareArrays(arr1: string[], arr2: string[]) {
+    if (arr1.length !== arr2.length) return
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return i
+    }
+  }
+
+  const index = compareArrays(history[move], history[move - 1]);
+  if (index !== undefined) {
+    const col = index % 3;
+    const row = Math.floor(index / 3);
+    return `(${row + 1}, ${col + 1})`;
+  }
+
+  return ''
+}
+
+function checkIfDraw(squares: string[]) {
   return squares.every(square => square !== "") && !calculateWinner(squares);
+}
+
+function checkIfGameEnded(squares: string[]) {
+  return calculateWinner(squares) || checkIfDraw(squares);
 }
 
 function calculateWinnerSquares(squares: string[]) {
@@ -150,3 +193,5 @@ function calculateWinner(squares: string[]) {
     ? squares[result[0]]
     : null;
 }
+
+

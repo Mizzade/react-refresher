@@ -69,10 +69,12 @@ body {
   padding: 0;
   text-align: center;
   width: 34px;
+<<<<<<< HEAD
 
   &.winning {
     background-color: goldenRod;
   }
+=======
 }
 
 .board-row:after {
@@ -91,4 +93,32 @@ body {
 
 .game-info {
   margin-left: 20px;
+>>>>>>> 335dd58 (Chapter: Overview)
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-restart {
+  margin-top: 10px;
 }
