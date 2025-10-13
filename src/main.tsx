@@ -5,11 +5,13 @@ import Gallery, { Profile } from './Gallery.tsx'
 import TicTacToe from './TicTacToe.tsx'
 import TodoList from './TodoList.tsx'
 import { Avatar } from './Avatar.tsx'
+import List from './List.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <TodoList />
     <Gallery />
+    <List />
     <Profile />
     <Avatar
       size={100}
