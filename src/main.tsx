@@ -8,9 +8,11 @@ import { Avatar } from './Avatar.tsx'
 import List from './List.tsx'
 import { Button } from './Button.tsx'
 import { Toolbar } from './Toolbar.tsx'
+import { Signup } from './Signup.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Signup />
     <Toolbar
       onPlayMovie={() => alert('Playing!')}
       onUploadImage={() => alert('Uploading!')}
