@@ -1,4 +1,4 @@
-import { people } from './data.js'
+import { people } from './data/persons.js'
 import { getImageUrl } from './utils';
 
 export default function List() {
