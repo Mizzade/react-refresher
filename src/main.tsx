@@ -9,9 +9,11 @@ import List from './List.tsx'
 import { Button } from './Button.tsx'
 import { Toolbar } from './Toolbar.tsx'
 import { Signup } from './Signup.tsx'
+import { Form } from './Form.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Form />
     <SculptureGallery />
     <Signup />
     <Toolbar
