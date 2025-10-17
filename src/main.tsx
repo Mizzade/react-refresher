@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Gallery, { Profile } from './Gallery.tsx'
+import Gallery, { Profile, SculptureGallery } from './Gallery.tsx'
 import TicTacToe from './TicTacToe.tsx'
 import TodoList from './TodoList.tsx'
 import { Avatar } from './Avatar.tsx'
@@ -12,6 +12,7 @@ import { Signup } from './Signup.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <SculptureGallery />
     <Signup />
     <Toolbar
       onPlayMovie={() => alert('Playing!')}
