@@ -11,9 +11,11 @@ import { Toolbar } from './Toolbar.tsx'
 import { Signup } from './Signup.tsx'
 import { Form, EmailForm } from './Form.tsx'
 import { Page } from './Page.tsx'
+import TaskApp from './task-app/TaskApp.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <TaskApp />
     <Page />
     <Form />
     <EmailForm />
